@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Hive Metastore" uuid="ff50074a-ebcd-42b1-9c79-c50a6d40850a">
+      <driver-ref>7c9c627a-afe5-48aa-bea8-fdc3c2e718b0</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <remarks>Wrapper For Hive Metastore from Big Data Tools plugin</remarks>
+      <jdbc-driver>com.dbschema.ZeppelinSparkJdbcDriver</jdbc-driver>
+      <jdbc-url>Hive Metastore@HiveMetastoreConnections@3432321907507694336</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="connectionId" value="Hive Metastore@HiveMetastoreConnections@3432321907507694336" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

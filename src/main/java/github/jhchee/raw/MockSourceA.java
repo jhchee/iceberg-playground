@@ -1,6 +1,8 @@
 package github.jhchee.raw;
 
 import com.github.javafaker.Faker;
+import github.jhchee.IcebergUtils;
+import github.jhchee.schema.SourceATable;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -36,10 +38,10 @@ public class MockSourceA {
                                      .withColumn("favoriteHarryPotterCharacter", call_udf("favoriteHarryPotterCharacter"))
                                      .withColumn("updatedAt", lit(current_timestamp()));
 
-        if (!spark.catalog().tableExists("default", "source_a")) {
-            mockUser.writeTo("default.source_a")
+        // Create table if it doesn't exist
+        if (!IcebergUtils.tableExists(spark, SourceATable.TABLE_NAME)) {
+            mockUser.writeTo(SourceATable.TABLE_NAME)
                     .using("iceberg")
-                    .tableProperty("primaryKey", "userId")
                     .create();
             return;
         }

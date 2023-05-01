@@ -1,6 +1,8 @@
 package github.jhchee.agg;
 
+import github.jhchee.IcebergUtils;
 import github.jhchee.schema.SourceATable;
+import github.jhchee.schema.SourceBTable;
 import github.jhchee.schema.TargetTable;
 import org.apache.spark.api.java.function.VoidFunction2;
 import org.apache.spark.sql.Dataset;
@@ -25,19 +27,27 @@ public class MergeIncremental {
                                          .enableHiveSupport()
                                          .getOrCreate();
 
-        Dataset<Row> empty = spark.createDataFrame(Collections.emptyList(), TargetTable.SCHEMA);
-        if (!spark.catalog().tableExists("default", "target")) {
-            empty.writeTo("default.target")
+        // Create table if it doesn't exist
+        if (!IcebergUtils.tableExists(spark, TargetTable.TABLE_NAME)) {
+            Dataset<Row> empty = spark.createDataFrame(Collections.emptyList(), TargetTable.SCHEMA);
+            empty.writeTo(TargetTable.TABLE_NAME)
                  .using("iceberg")
                  .create();
         }
 
-        String query = "MERGE INTO default.target as target USING source " +
+        String mergeFromSourceA = "MERGE INTO default.target as target USING source " +
                 "ON target.userId = source.userId " +
                 "WHEN MATCHED THEN UPDATE SET target.persona = struct(source.favoriteEsports), target.updatedAt = source.updatedAt " +
                 "WHEN NOT MATCHED THEN INSERT (userId, info, persona, updatedAt) " +
                 "VALUES (source.userId, NULL, struct(source.favoriteEsports), source.updatedAt)";
-        incrementalMerge(spark, SourceATable.TABLE_NAME, TargetTable.TABLE_NAME, query);
+
+        String mergeFromSourceB = "MERGE INTO default.target as target USING source ON target.userId = source.userId " +
+                "WHEN MATCHED THEN UPDATE SET target.persona = struct(source.favoriteEsports), target.updatedAt = source.updatedAt " +
+                "WHEN NOT MATCHED THEN INSERT (userId, info, persona, updatedAt) " +
+                "VALUES (source.userId, NULL, struct(source.name), NULL, source.updatedAt)";
+
+        incrementalMerge(spark, SourceATable.TABLE_NAME, TargetTable.TABLE_NAME, mergeFromSourceA);
+        incrementalMerge(spark, SourceBTable.TABLE_NAME, TargetTable.TABLE_NAME, mergeFromSourceB);
     }
 
     public static void incrementalMerge(SparkSession spark, String sourceTable, String targetTable, String mergeQuery) throws TimeoutException, StreamingQueryException {

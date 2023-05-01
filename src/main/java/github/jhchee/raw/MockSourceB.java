@@ -1,12 +1,12 @@
 package github.jhchee.raw;
 
 import com.github.javafaker.Faker;
+import github.jhchee.IcebergUtils;
+import github.jhchee.schema.SourceBTable;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF0;
-import org.apache.spark.sql.catalyst.analysis.NoSuchTableException;
-import org.apache.spark.sql.catalyst.analysis.TableAlreadyExistsException;
 import org.apache.spark.sql.types.DataTypes;
 
 import static org.apache.spark.sql.functions.*;
@@ -42,8 +42,9 @@ public class MockSourceB {
                                      .withColumn("country", call_udf("country"))
                                      .withColumn("updatedAt", lit(current_timestamp()));
 
-        if (!spark.catalog().tableExists("default", "source_b")) {
-            mockUser.writeTo("default.source_b")
+        // Create table if it doesn't exist
+        if (!IcebergUtils.tableExists(spark, SourceBTable.TABLE_NAME)) {
+            mockUser.writeTo(SourceBTable.TABLE_NAME)
                     .using("iceberg")
                     .create();
             return;

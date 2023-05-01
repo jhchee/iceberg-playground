@@ -9,8 +9,6 @@ public class TargetTable {
     public static StructType SCHEMA = root();
     public static String TABLE_NAME = "target";
     public static String PATH = "s3a://spark/target/";
-    public static String PK = "userId";
-    public static String COMBINE_KEY = "updatedAt";
 
     private static StructType root() {
         StructType schema = new StructType();

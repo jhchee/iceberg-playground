@@ -5,11 +5,9 @@ import org.apache.spark.sql.SparkSession;
 public class DropTable {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder()
-                                         .appName("Drop Hudi Tables.")
+                                         .appName("Drop Iceberg tables.")
                                          .config("spark.sql.warehouse.dir", "s3a://spark/")
-//                                         .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
-//                                         .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
                                          .enableHiveSupport()
                                          .getOrCreate();
 

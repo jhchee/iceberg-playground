@@ -25,6 +25,7 @@ public class MergeSnapshot {
         if (!IcebergUtils.tableExists(spark, TargetTable.TABLE_NAME)) {
             Dataset<Row> empty = spark.createDataFrame(Collections.emptyList(), TargetTable.SCHEMA);
             empty.writeTo(TargetTable.TABLE_NAME)
+                 .tableProperty("location", TargetTable.PATH)
                  .using("iceberg")
                  .create();
         }
@@ -42,9 +43,9 @@ public class MergeSnapshot {
         spark.table(SourceBTable.TABLE_NAME).createOrReplaceTempView("source");
         spark.sql("" +
                 "MERGE INTO default.target as target USING source ON target.userId = source.userId " +
-                "WHEN MATCHED THEN UPDATE SET target.persona = struct(source.favoriteEsports), target.updatedAt = source.updatedAt " +
+                "WHEN MATCHED THEN UPDATE SET target.info = struct(source.name), target.updatedAt = source.updatedAt " +
                 "WHEN NOT MATCHED THEN INSERT (userId, info, persona, updatedAt) " +
-                "VALUES (source.userId, NULL, struct(source.name), NULL, source.updatedAt)" +
+                "VALUES (source.userId, struct(source.name), NULL, source.updatedAt)" +
                 "");
 
         // Sanity check

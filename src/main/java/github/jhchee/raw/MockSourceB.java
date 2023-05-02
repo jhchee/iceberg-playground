@@ -46,13 +46,14 @@ public class MockSourceB {
         if (!IcebergUtils.tableExists(spark, SourceBTable.TABLE_NAME)) {
             mockUser.writeTo(SourceBTable.TABLE_NAME)
                     .using("iceberg")
+                    .tableProperty("location", SourceBTable.PATH)
+                    .tableProperty("format-version", "2")
                     .create();
             return;
         }
         mockUser.createTempView("source");
         spark.sql("MERGE INTO default.source_b as target\n" +
-                "USING source \n" +
-                "ON target.userId = source.userId\n" +
+                "USING source ON target.userId = source.userId\n" +
                 "WHEN MATCHED THEN UPDATE SET *\n" +
                 "WHEN NOT MATCHED THEN INSERT *");
     }

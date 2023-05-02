@@ -32,6 +32,7 @@ public class MergeIncremental {
             Dataset<Row> empty = spark.createDataFrame(Collections.emptyList(), TargetTable.SCHEMA);
             empty.writeTo(TargetTable.TABLE_NAME)
                  .using("iceberg")
+                 .tableProperty("location", TargetTable.PATH)
                  .create();
         }
 
@@ -42,9 +43,9 @@ public class MergeIncremental {
                 "VALUES (source.userId, NULL, struct(source.favoriteEsports), source.updatedAt)";
 
         String mergeFromSourceB = "MERGE INTO default.target as target USING source ON target.userId = source.userId " +
-                "WHEN MATCHED THEN UPDATE SET target.persona = struct(source.favoriteEsports), target.updatedAt = source.updatedAt " +
+                "WHEN MATCHED THEN UPDATE SET target.info = struct(source.name), target.updatedAt = source.updatedAt " +
                 "WHEN NOT MATCHED THEN INSERT (userId, info, persona, updatedAt) " +
-                "VALUES (source.userId, NULL, struct(source.name), NULL, source.updatedAt)";
+                "VALUES (source.userId, struct(source.name), NULL, source.updatedAt)";
 
         incrementalMerge(spark, SourceATable.TABLE_NAME, TargetTable.TABLE_NAME, mergeFromSourceA);
         incrementalMerge(spark, SourceBTable.TABLE_NAME, TargetTable.TABLE_NAME, mergeFromSourceB);

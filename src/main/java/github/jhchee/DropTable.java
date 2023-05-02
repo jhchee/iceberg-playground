@@ -11,6 +11,7 @@ public class DropTable {
                                          .enableHiveSupport()
                                          .getOrCreate();
 
+        spark.sql("DROP TABLE IF EXISTS iceberg_table");
         spark.sql("DROP TABLE IF EXISTS source_a");
         spark.sql("DROP TABLE IF EXISTS source_b");
         spark.sql("DROP TABLE IF EXISTS target");

@@ -20,7 +20,6 @@ public class MockSourceA {
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
                                          .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
-                                         .enableHiveSupport()
                                          .getOrCreate();
 
         spark.udf().register("favoriteEsports", favoriteEsports, DataTypes.StringType);

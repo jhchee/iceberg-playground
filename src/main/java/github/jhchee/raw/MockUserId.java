@@ -14,7 +14,6 @@ public class MockUserId {
                                          .appName("generate uuid")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
-                                         .enableHiveSupport()
                                          .getOrCreate();
 
         Dataset<String> userIds = spark.createDataset(IntStream.range(0, 1_000_000)

@@ -7,7 +7,6 @@ public class DropTable {
         SparkSession spark = SparkSession.builder()
                                          .appName("Drop Iceberg tables.")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
-                                         .enableHiveSupport()
                                          .getOrCreate();
 
         spark.sql("DROP TABLE IF EXISTS source_a");

@@ -11,7 +11,6 @@ public class ReadSnapshot {
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
                                          .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
-                                         .enableHiveSupport()
                                          .getOrCreate();
 
         Dataset<Row> df = spark.sql("SELECT * FROM default.source_a");

@@ -15,11 +15,9 @@ public class MergeSnapshot {
     public static void main(String[] args) throws Exception {
         SparkSession spark = SparkSession.builder()
                                          .appName("Merge snapshot read")
-                                         .config("spark.sql.warehouse.dir", "s3a://spark/")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
                                          .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
-                                         .enableHiveSupport()
                                          .getOrCreate();
         // Create table if it doesn't exist
         if (!IcebergUtils.tableExists(spark, TargetTable.TABLE_NAME)) {

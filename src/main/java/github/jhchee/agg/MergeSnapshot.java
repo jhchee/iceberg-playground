@@ -27,6 +27,7 @@ public class MergeSnapshot {
             empty.writeTo(TargetTable.TABLE_NAME)
                  .tableProperty("location", TargetTable.PATH)
                  .using("iceberg")
+                 .tableProperty("format-version", "2")
                  .create();
         }
 

@@ -8,7 +8,6 @@ public class ReadSnapshot {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder()
                                          .appName("Read snapshot.")
-                                         .config("spark.sql.warehouse.dir", "s3a://spark/")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
                                          .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")

@@ -17,7 +17,6 @@ public class MockSourceA {
     public static void main(String[] args) throws Exception {
         SparkSession spark = SparkSession.builder()
                                          .appName("Mock data for source A.")
-                                         .config("spark.sql.warehouse.dir", "s3a://spark/")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
                                          .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")

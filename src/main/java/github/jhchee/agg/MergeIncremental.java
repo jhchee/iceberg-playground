@@ -20,7 +20,6 @@ public class MergeIncremental {
     public static void main(String[] args) throws Exception {
         SparkSession spark = SparkSession.builder()
                                          .appName("Merge incrementally")
-                                         .config("spark.sql.warehouse.dir", "s3a://spark/")
                                          .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")

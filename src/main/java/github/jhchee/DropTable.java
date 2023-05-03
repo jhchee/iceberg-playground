@@ -6,12 +6,10 @@ public class DropTable {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder()
                                          .appName("Drop Iceberg tables.")
-                                         .config("spark.sql.warehouse.dir", "s3a://spark/")
                                          .config("hive.metastore.uris", "thrift://localhost:9083")
                                          .enableHiveSupport()
                                          .getOrCreate();
 
-        spark.sql("DROP TABLE IF EXISTS iceberg_table");
         spark.sql("DROP TABLE IF EXISTS source_a");
         spark.sql("DROP TABLE IF EXISTS source_b");
         spark.sql("DROP TABLE IF EXISTS target");

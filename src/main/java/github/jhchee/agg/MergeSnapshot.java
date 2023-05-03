@@ -1,6 +1,7 @@
 package github.jhchee.agg;
 
 import github.jhchee.IcebergUtils;
+import github.jhchee.ResourceUtils;
 import github.jhchee.schema.SourceATable;
 import github.jhchee.schema.SourceBTable;
 import github.jhchee.schema.TargetTable;
@@ -31,21 +32,11 @@ public class MergeSnapshot {
 
         // Merge from source a
         spark.table(SourceATable.TABLE_NAME).createOrReplaceTempView("source");
-        spark.sql("" +
-                "MERGE INTO default.target as target USING source ON target.userId = source.userId " +
-                "WHEN MATCHED THEN UPDATE SET target.persona = struct(source.favoriteEsports), target.updatedAt = source.updatedAt " +
-                "WHEN NOT MATCHED THEN INSERT (userId, info, persona, updatedAt) " +
-                "VALUES (source.userId, NULL, struct(source.favoriteEsports), source.updatedAt)" +
-                "");
+        spark.sql(ResourceUtils.getSQLQuery("merge_source_a_into_target.sql"));
 
         // Merge from source b
         spark.table(SourceBTable.TABLE_NAME).createOrReplaceTempView("source");
-        spark.sql("" +
-                "MERGE INTO default.target as target USING source ON target.userId = source.userId " +
-                "WHEN MATCHED THEN UPDATE SET target.info = struct(source.name), target.updatedAt = source.updatedAt " +
-                "WHEN NOT MATCHED THEN INSERT (userId, info, persona, updatedAt) " +
-                "VALUES (source.userId, struct(source.name), NULL, source.updatedAt)" +
-                "");
+        spark.sql(ResourceUtils.getSQLQuery("merge_source_b_into_target.sql"));
 
         // Sanity check
         Dataset<Row> df = spark.sql("SELECT * FROM default.target");

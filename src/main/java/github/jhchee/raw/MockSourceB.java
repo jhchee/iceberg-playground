@@ -2,6 +2,7 @@ package github.jhchee.raw;
 
 import com.github.javafaker.Faker;
 import github.jhchee.IcebergUtils;
+import github.jhchee.ResourceUtils;
 import github.jhchee.schema.SourceBTable;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -50,10 +51,7 @@ public class MockSourceB {
             return;
         }
         mockUser.createTempView("source");
-        spark.sql("MERGE INTO default.source_b as target\n" +
-                "USING source ON target.userId = source.userId\n" +
-                "WHEN MATCHED THEN UPDATE SET *\n" +
-                "WHEN NOT MATCHED THEN INSERT *");
+        spark.sql(ResourceUtils.getSQLQuery("merge_source_b.sql"));
     }
 
     public static UDF0<String> fullName = () -> faker.name().fullName();

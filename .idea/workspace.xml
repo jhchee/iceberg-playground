@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a30636b0-268e-4f68-a5c3-e59d53ba4ac9" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,14 +42,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "jdk.selected.JAVA_MODULE": "corretto-11",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/vchee/Documents/Work/iceberg-playground/dev",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -105,11 +106,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-1.8.0_402-temurin-1.8.0_402-4caba194b151-559bc248" />
-        <option value="jdk-11.0.21-corretto-11.0.21-e1d2075fd9a7-a69207ce" />
-        <option value="jdk-17.0.10-corretto-17.0.10-f644763e9732-f00315f9" />
-        <option value="jdk-17.0.9-temurin-17.0.9-4caba194b151-2f65f212" />
-        <option value="jdk-21.0.1-corretto-21.0.1-4caba194b151-87685b2c" />
+        <option value="jdk-11.0.22-corretto-11.0.22-4caba194b151-bfa3237e" />
       </set>
     </attachedChunks>
   </component>
@@ -126,7 +123,9 @@
       <workItem from="1709393366188" duration="4378000" />
       <workItem from="1709438284609" duration="31147000" />
       <workItem from="1709521091623" duration="19203000" />
-      <workItem from="1709721465839" duration="2346000" />
+      <workItem from="1709721465839" duration="2843000" />
+      <workItem from="1709724316546" duration="13000" />
+      <workItem from="1709724336741" duration="19000" />
     </task>
     <task id="LOCAL-00001" summary="Initial">
       <option name="closed" value="true" />
@@ -148,6 +147,9 @@
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/spark-java" />
+    </ignored-roots>
     <MESSAGE value="Initial" />
     <MESSAGE value="Update" />
     <option name="LAST_COMMIT_MESSAGE" value="Update" />
